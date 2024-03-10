@@ -6,6 +6,7 @@
     --color: none;
     --padding: none;
     --font-size: none;
+    --font-weight: none;
 
     display: flex;
     justify-content: center;
@@ -17,7 +18,9 @@
     border-radius: var(--border-radius);
     background: rgba(var(--background));
     font-size: var(--font-size);
+    font-weight: var(--font-weight);
     color: rgba(var(--color));
+    cursor: pointer;
 
     &:disabled {
         cursor: not-allowed;
@@ -25,10 +28,14 @@
         opacity: 0.5;
     }
 
+    &:hover {
+        background: rgba(var(--background), 0.8)
+    }
+
     &[data-color="primary"] {
         --background: 0, 174, 255;
-        --color: 255, 255, 255;
         --border-color: none;
+        --color: 255, 255, 255;
     }
 
     &[data-size="lg"] {
@@ -38,6 +45,7 @@
     &[data-size="md"] {
         --padding: 15px 30px;
         --font-size: 0.9rem;
+        --font-weight: 600;
     }
     &[data-size="sm"] {
         --padding: 5px 10px;
