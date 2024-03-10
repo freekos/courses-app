@@ -1,9 +1,11 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import styles from './styles.module.scss';
 
+type ButtonSize = 'lg' | 'md' | 'sm' | 'icon';
+type ButtonColor = 'primary';
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-	size?: 'md';
-	color?: 'primary';
+	size?: ButtonSize;
+	color?: ButtonColor;
 	loading?: boolean;
 };
 
