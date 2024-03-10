@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'src/common/Button';
 import { Input } from 'src/common/Input';
 import styles from './styles.module.scss';
@@ -9,6 +9,11 @@ interface SearchBarProps {
 
 export const SearchBar = ({ onSearch }: SearchBarProps) => {
 	const [search, setSearch] = useState<string>('');
+
+	useEffect(() => {
+		if (search) return;
+		onSearch('');
+	}, [search]);
 
 	return (
 		<div className={styles.search_bar}>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
+
 import { Container } from 'src/common/Container';
 import { Button } from 'src/common/Button';
 import { Course } from 'src/types/course';
@@ -15,9 +16,10 @@ export const Courses = ({ courses }: CoursesProps) => {
 	const [resultCourses, setResultCourses] = useState<Course[]>(courses);
 
 	const handleSearch = (search: string) => {
-		setResultCourses((prev) =>
-			prev.filter((item) => item.title.includes(search))
+		const filterCourses = courses.filter((item) =>
+			item.title.toLowerCase().startsWith(search.toLowerCase())
 		);
+		setResultCourses(filterCourses);
 	};
 
 	return (

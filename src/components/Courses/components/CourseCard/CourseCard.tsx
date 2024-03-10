@@ -1,10 +1,8 @@
-import { TrashIcon, PencilIcon } from '@heroicons/react/16/solid';
-import { Button } from 'src/common/Button';
+import { ReactNode } from 'react';
 import { Course } from 'src/types/course';
 import { formatCreatedDate, formatFullName } from 'src/helpers';
 import { CourseInfoText } from './CourseInfoText';
 import styles from './styles.module.scss';
-import { ReactNode } from 'react';
 
 interface CourseCardProps {
 	course: Course;
