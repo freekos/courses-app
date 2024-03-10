@@ -7,6 +7,10 @@
     margin: 0 auto;
     padding: 50px;
 
+    &[data-dark="true"] {
+        background: #fafafa;
+    }
+
     &__actions {
         display: flex;
         justify-content: space-between;
