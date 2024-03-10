@@ -1,0 +1,45 @@
+.button {
+    --border-width: none;
+    --border-color: none;
+    --border-radius: 5px;
+    --background: none;
+    --color: none;
+    --padding: none;
+    --font-size: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--padding);
+    border-width: var(--border-width);
+    border-color: var(--border-color);
+    border-radius: var(--border-radius);
+    background: rgba(var(--background));
+    font-size: var(--font-size);
+    color: rgba(var(--color));
+
+    &:disabled {
+        cursor: not-allowed;
+        background: rgba(var(--background));
+        opacity: 0.5;
+    }
+
+    &[data-color="primary"] {
+        --background: 0, 174, 255;
+        --color: 255, 255, 255;
+        --border-color: none;
+    }
+
+    &[data-size="lg"] {
+        --padding: 20px 35px;
+        --font-size: 1rem;
+    }
+    &[data-size="md"] {
+        --padding: 15px 30px;
+        --font-size: 0.9rem;
+    }
+    &[data-size="sm"] {
+        --padding: 5px 10px;
+        --font-size: 0.85rem;
+    }
+}
