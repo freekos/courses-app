@@ -28,7 +28,7 @@
         opacity: 0.5;
     }
 
-    &:hover {
+    &:hover, &:focus {
         background: rgba(var(--background), 0.8)
     }
 
