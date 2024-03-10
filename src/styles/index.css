@@ -13,9 +13,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+html, body, #root {
+  height: 100%;
+}
   
 .app {
   display: flex;
   flex-direction: column;
   padding-top: 80px;
+  height: 100%
+}
+
+.main {
+  flex: 1 0 auto;
 }
