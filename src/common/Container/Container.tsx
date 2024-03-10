@@ -11,9 +11,9 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
 		return (
 			<div className={styles.container} ref={ref} {...props}>
 				{(left || right) && (
-					<aside className={styles.container__action}>
-						<div>{left}</div>
-						<div>{right}</div>
+					<aside className={styles.container__actions}>
+						{left}
+						{right}
 					</aside>
 				)}
 				{children}

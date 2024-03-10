@@ -7,10 +7,18 @@
     margin: 0 auto;
     padding: 50px;
 
-    &__action {
+    &__actions {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
     } 
+}
+
+@media (max-width: 425px) {
+    .container {
+        &__actions {
+            flex-direction: column;
+        }
+    }
 }
