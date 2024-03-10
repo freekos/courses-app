@@ -24,6 +24,8 @@ export const Courses = ({ courses }: CoursesProps) => {
 
 	return (
 		<Container
+			isDark
+			style={{ height: '100%' }}
 			left={<SearchBar onSearch={handleSearch} />}
 			right={
 				<a href='#'>
