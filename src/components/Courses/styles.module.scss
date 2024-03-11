@@ -4,3 +4,28 @@
         gap: 3px
     }
 }
+
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    &__content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 24px;
+    }
+    &__action {
+        margin-top: 40px;
+    }
+}
+
+.empty_content {
+    &__title {
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+}
