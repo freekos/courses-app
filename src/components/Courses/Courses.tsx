@@ -17,7 +17,7 @@ export const Courses = ({ courses }: CoursesProps) => {
 
 	const handleSearch = (search: string) => {
 		const filterCourses = courses.filter((item) =>
-			item.title.toLowerCase().startsWith(search.toLowerCase())
+			item.title.toLowerCase().includes(search.toLowerCase())
 		);
 		setResultCourses(filterCourses);
 	};
