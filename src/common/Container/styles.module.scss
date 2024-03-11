@@ -2,13 +2,19 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    max-width: 1280px;
     width: 100%;
-    margin: 0 auto;
     padding: 50px;
+    
 
-    &[data-dark="true"] {
-        background: #fafafa;
+    &[data-container="true"] {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    &__wrapper{
+        &[data-dark="true"] {
+            background: #fafafa;
+        }
     }
 
     &__actions {
