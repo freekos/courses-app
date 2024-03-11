@@ -13,14 +13,15 @@
         font-weight: 700;
     }
     &__content {
-        display: flex;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
         justify-content: space-between;
         gap: 10px;
     }
     &__aside {
         display: flex;
         flex-direction: column;
-        gap: 30px
+        gap: 30px;
     }
 }
 
@@ -61,7 +62,7 @@
     .course_card {
         padding: 20px 15px;
         &__content {
-            flex-direction: column;
+            grid-template-columns: 1fr;
             gap: 25px;
         }
     }   
