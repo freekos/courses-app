@@ -6,6 +6,7 @@ import { Button } from 'src/common/Button';
 import { Course } from 'src/types/course';
 import { SearchBar } from './components/SearchBar';
 import { CourseCard } from './components/CourseCard';
+import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
 
 interface CoursesProps {
@@ -21,6 +22,28 @@ export const Courses = ({ courses }: CoursesProps) => {
 		);
 		setResultCourses(filterCourses);
 	};
+
+	if (!courses.length) {
+		return (
+			<Container
+				isDark
+				style={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					height: '100%',
+				}}
+			>
+				<EmptyCoursesList
+					action={
+						<Button style={{ textTransform: 'uppercase' }}>
+							Add new course
+						</Button>
+					}
+				/>
+			</Container>
+		);
+	}
 
 	return (
 		<Container
