@@ -1,6 +1,10 @@
 import { ReactNode } from 'react';
 import { Course } from 'src/types/course';
-import { formatCreatedDate, formatFullName } from 'src/helpers';
+import {
+	formatCreatedDate,
+	formatFullName,
+	getDurationTime,
+} from 'src/helpers';
 import { CourseInfoText } from './CourseInfoText';
 import styles from './styles.module.scss';
 
@@ -23,7 +27,10 @@ export const CourseCard = ({ course, actions }: CourseCardProps) => {
 							title='Authors:'
 							description={course.authors.map(formatFullName).join(', ')}
 						/>
-						<CourseInfoText title='Duration:' description={course.duration} />
+						<CourseInfoText
+							title='Duration:'
+							description={getDurationTime(course.duration)}
+						/>
 						<CourseInfoText
 							title='Created:'
 							description={formatCreatedDate(course.createdAt)}
