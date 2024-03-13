@@ -11,7 +11,8 @@
         margin: 0 auto;
     }
 
-    &__wrapper{
+    &__wrapper {
+        height: 100%;
         &[data-dark="true"] {
             background: #fafafa;
         }
