@@ -1,0 +1,17 @@
+.course_info {
+    &__title {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 40px;
+        color: #333E48;
+    }
+    &__card {
+        margin-top: 23px;
+    }
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-top: 46px;
+    }
+}
