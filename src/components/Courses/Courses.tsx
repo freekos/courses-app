@@ -11,9 +11,10 @@ import styles from './styles.module.scss';
 
 interface CoursesProps {
 	courses: Course[];
+	onShow: (course: Course) => void;
 }
 
-export const Courses = ({ courses }: CoursesProps) => {
+export const Courses = ({ courses, onShow }: CoursesProps) => {
 	const [resultCourses, setResultCourses] = useState<Course[]>(courses);
 
 	const handleSearch = (search: string) => {
@@ -62,7 +63,10 @@ export const Courses = ({ courses }: CoursesProps) => {
 					course={item}
 					actions={
 						<div className={styles.course__actions}>
-							<Button style={{ width: '100%', textTransform: 'uppercase' }}>
+							<Button
+								onClick={() => onShow(item)}
+								style={{ width: '100%', textTransform: 'uppercase' }}
+							>
 								Show course
 							</Button>
 
