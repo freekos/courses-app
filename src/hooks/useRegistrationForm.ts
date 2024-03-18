@@ -3,12 +3,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 const registrationSchema = z.object({
-	name: z.string({ required_error: 'Name is required' }),
+	name: z.string().min(1, { message: 'Name is required' }),
 	email: z
-		.string({ required_error: 'Email is required' })
+		.string()
+		.min(1, { message: 'Email is required' })
 		.email({ message: 'Invalid email format' }),
 	password: z
-		.string({ required_error: 'Password is required' })
+		.string()
+		.min(1, { message: 'Password is required' })
 		.min(8, { message: 'Min password length is 8' }),
 });
 export type RegistrationSchema = z.infer<typeof registrationSchema>;
