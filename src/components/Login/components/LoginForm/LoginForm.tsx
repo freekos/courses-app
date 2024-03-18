@@ -46,7 +46,6 @@ export const LoginForm = ({ form, onSubmit }: LoginFormProps) => {
 			button={
 				<Button
 					style={{ textTransform: 'uppercase', fontWeight: 700 }}
-					size='lg'
 					type='submit'
 					loading={form.formState.isSubmitting}
 				>
