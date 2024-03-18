@@ -1,0 +1,15 @@
+.auth_card {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+    max-width: 585px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 64px 150px;
+    border: 1px solid #CFCFCF;
+    border-radius: 4px;
+    background: rgb(255, 255, 255);
+    @media (max-width: 768px) {
+        padding: 64px 25px;
+    }
+}
