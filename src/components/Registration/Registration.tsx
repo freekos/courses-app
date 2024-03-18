@@ -1,0 +1,26 @@
+import { Link } from 'react-router-dom';
+
+import { useRegistrationForm } from 'src/hooks/useRegistrationForm';
+import { Container } from 'src/common/Container';
+import { RegistrationForm } from './components/RegistrationForm';
+import { AuthCard, AuthLayout } from 'src/common/Auth';
+
+export const Registration = () => {
+	const { form, handleRegistration } = useRegistrationForm();
+
+	return (
+		<Container isDark>
+			<AuthLayout title='Registration'>
+				<AuthCard>
+					<RegistrationForm form={form} onSubmit={handleRegistration} />
+					<span className='auth__description'>
+						If you have an account you may{' '}
+						<Link style={{ fontWeight: 700 }} to='/login'>
+							Login
+						</Link>
+					</span>
+				</AuthCard>
+			</AuthLayout>
+		</Container>
+	);
+};
