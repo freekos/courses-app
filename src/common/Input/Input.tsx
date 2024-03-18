@@ -1,11 +1,19 @@
 import { InputHTMLAttributes, forwardRef } from 'react';
+
 import styles from './styles.module.scss';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement>;
+type InputProps = InputHTMLAttributes<HTMLInputElement> & { error?: string };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-	(props: InputProps, ref) => {
-		return <input className={styles.input} ref={ref} {...props} />;
+	({ error, ...props }: InputProps, ref) => {
+		return (
+			<input
+				className={styles.input}
+				ref={ref}
+				data-error={!!error}
+				{...props}
+			/>
+		);
 	}
 );
 
