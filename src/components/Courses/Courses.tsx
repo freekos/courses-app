@@ -45,7 +45,10 @@ export const Courses = () => {
 			>
 				<EmptyCoursesList
 					action={
-						<Button style={{ textTransform: 'uppercase' }}>
+						<Button
+							style={{ textTransform: 'uppercase' }}
+							onClick={() => navigate('/courses/add')}
+						>
 							Add new course
 						</Button>
 					}
