@@ -5,14 +5,14 @@ import { Routing } from './routing';
 
 function App() {
 	return (
-		<div className='app'>
-			<Header />
-			<main className='main'>
-				<BrowserRouter>
+		<BrowserRouter>
+			<div className='app'>
+				<Header />
+				<main className='main'>
 					<Routing />
-				</BrowserRouter>
-			</main>
-		</div>
+				</main>
+			</div>
+		</BrowserRouter>
 	);
 }
 
