@@ -1,6 +1,9 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+
+import { authApi } from 'src/api';
 
 const registrationSchema = z.object({
 	name: z.string().min(1, { message: 'Name is required' }),
@@ -24,13 +27,18 @@ export const useRegistrationForm = () => {
 		},
 		resolver: zodResolver(registrationSchema),
 	});
+	const navigate = useNavigate();
 
 	const handleRegistration = async (data: RegistrationSchema) => {
 		try {
-			const res = await fetch('');
+			const res = await authApi.register(data);
+			form.reset();
+			navigate('/login');
 		} catch (err) {
-			form.setError('root', { message: err });
 			console.log(err);
+			form.setError('root', {
+				message: err?.response?.data?.result ?? 'Request error',
+			});
 		}
 	};
 
