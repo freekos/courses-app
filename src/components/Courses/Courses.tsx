@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
+import { useNavigate } from 'react-router-dom';
 
 import { Container } from 'src/common/Container';
 import { Button } from 'src/common/Button';
 import { Course } from 'src/types/course';
 import { SearchBar } from './components/SearchBar';
 import { CourseCard } from './components/CourseCard';
+import { AUTHORS_LIST, COURSES } from 'src/constants';
 import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
-import { AUTHORS_LIST, COURSES } from 'src/constants';
-import { useNavigate } from 'react-router-dom';
 
 export const Courses = () => {
 	const courses = COURSES.map((course) => {
