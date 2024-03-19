@@ -4,6 +4,7 @@ import { CourseInfo } from 'src/components/CourseInfo';
 import { Courses } from 'src/components/Courses';
 import { Login } from 'src/components/Login';
 import { Registration } from 'src/components/Registration';
+import { useSession } from 'src/hooks/useSession';
 
 export const Routing = () => {
 	return (
@@ -15,14 +16,21 @@ export const Routing = () => {
 					<Route path=':id' Component={CourseInfo} />
 				</Route>
 			</Route>
-			<Route path='/login' Component={Login} />
-			<Route path='/registration' Component={Registration} />
-			<Route path='*' element={<Navigate to='/' />} />
+			<Route Component={AuthProtect}>
+				<Route path='/login' Component={Login} />
+				<Route path='/registration' Component={Registration} />
+			</Route>
+			<Route path='*' element={<Navigate to='/courses' />} />
 		</Routes>
 	);
 };
 
 const UserProtect = () => {
-	const isAuth = false;
+	const { isAuth } = useSession();
 	return isAuth ? <Outlet /> : <Navigate to='/login' />;
+};
+
+const AuthProtect = () => {
+	const { isAuth } = useSession();
+	return !isAuth ? <Outlet /> : <Navigate to='/courses' />;
 };
