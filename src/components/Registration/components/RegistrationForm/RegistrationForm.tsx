@@ -44,11 +44,12 @@ export const RegistrationForm = ({ form, onSubmit }: RegistrationFormProps) => {
 					/>
 					<Controller
 						control={form.control}
-						name='name'
+						name='password'
 						render={({ field }) => {
 							const error = form.formState.errors.password?.message;
+							const rootError = form.formState.errors.root?.message;
 							return (
-								<Field label='Password*' error={error}>
+								<Field label='Password*' error={error || rootError}>
 									<Input placeholder='Input text' error={error} {...field} />
 								</Field>
 							);
