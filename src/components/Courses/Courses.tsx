@@ -9,7 +9,7 @@ import { CourseCard } from './components/CourseCard';
 import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
 import { AUTHORS_LIST, COURSES } from 'src/constants';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Courses = () => {
 	const courses = COURSES.map((course) => {
@@ -23,6 +23,7 @@ export const Courses = () => {
 		};
 	});
 	const [resultCourses, setResultCourses] = useState<Course[]>(courses);
+	const navigate = useNavigate();
 
 	const handleSearch = (search: string) => {
 		const filterCourses = courses.filter((item) =>
@@ -59,9 +60,12 @@ export const Courses = () => {
 			style={{ height: '100%' }}
 			left={<SearchBar onSearch={handleSearch} />}
 			right={
-				<a href='#'>
-					<Button style={{ textTransform: 'uppercase' }}>Add new</Button>
-				</a>
+				<Button
+					style={{ textTransform: 'uppercase' }}
+					onClick={() => navigate('/courses/add')}
+				>
+					Add new
+				</Button>
 			}
 		>
 			{resultCourses.map((item) => (
@@ -70,11 +74,12 @@ export const Courses = () => {
 					course={item}
 					actions={
 						<div className={styles.course__actions}>
-							<Link to={`/courses/${item.id}`}>
-								<Button style={{ width: '100%', textTransform: 'uppercase' }}>
-									Show course
-								</Button>
-							</Link>
+							<Button
+								style={{ width: '100%', textTransform: 'uppercase' }}
+								onClick={() => navigate(`/courses/${item.id}`)}
+							>
+								Show course
+							</Button>
 
 							<Button size='icon'>
 								<TrashIcon width='20' color='white' />
