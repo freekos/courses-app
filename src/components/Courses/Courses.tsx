@@ -9,7 +9,7 @@ import { CourseCard } from './components/CourseCard';
 import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
 import { AUTHORS_LIST, COURSES } from 'src/constants';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const Courses = () => {
 	const courses = COURSES.map((course) => {
