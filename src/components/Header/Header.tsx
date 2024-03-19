@@ -14,9 +14,9 @@ export const Header = () => {
 		<header className={styles.header}>
 			<HeaderWrapper
 				left={
-					<a href='#'>
+					<Link to='/courses'>
 						<Logo />
-					</a>
+					</Link>
 				}
 				right={
 					<div className={styles.header__right}>
