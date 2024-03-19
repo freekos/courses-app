@@ -8,13 +8,20 @@ import { SearchBar } from './components/SearchBar';
 import { CourseCard } from './components/CourseCard';
 import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
+import { AUTHORS_LIST, COURSES } from 'src/constants';
+import { Link } from 'react-router-dom';
 
-interface CoursesProps {
-	courses: Course[];
-	onShow: (course: Course) => void;
-}
-
-export const Courses = ({ courses, onShow }: CoursesProps) => {
+export const Courses = () => {
+	const courses = COURSES.map((course) => {
+		const authors = course.authors.map((author) => {
+			const findAuthor = AUTHORS_LIST.find((item) => item.id === author);
+			return findAuthor!.name;
+		});
+		return {
+			...course,
+			authors,
+		};
+	});
 	const [resultCourses, setResultCourses] = useState<Course[]>(courses);
 
 	const handleSearch = (search: string) => {
@@ -63,12 +70,11 @@ export const Courses = ({ courses, onShow }: CoursesProps) => {
 					course={item}
 					actions={
 						<div className={styles.course__actions}>
-							<Button
-								onClick={() => onShow(item)}
-								style={{ width: '100%', textTransform: 'uppercase' }}
-							>
-								Show course
-							</Button>
+							<Link to={`/courses/${item.id}`}>
+								<Button style={{ width: '100%', textTransform: 'uppercase' }}>
+									Show course
+								</Button>
+							</Link>
 
 							<Button size='icon'>
 								<TrashIcon width='20' color='white' />
