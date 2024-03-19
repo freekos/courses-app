@@ -7,6 +7,7 @@ import {
 } from 'src/helpers';
 import { CourseInfoText } from './CourseInfoText';
 import styles from './styles.module.scss';
+import { Card } from 'src/common/Card';
 
 interface CourseCardProps {
 	course: Course;
@@ -15,7 +16,7 @@ interface CourseCardProps {
 
 export const CourseCard = ({ course, actions }: CourseCardProps) => {
 	return (
-		<div className={styles.course_card}>
+		<Card.Outlined className={styles.course_card}>
 			<h5 className={styles.course_card__title}>{course.title}</h5>
 			<div className={styles.course_card__content}>
 				<p className={styles.course_content__description}>
@@ -39,6 +40,6 @@ export const CourseCard = ({ course, actions }: CourseCardProps) => {
 					{actions}
 				</aside>
 			</div>
-		</div>
+		</Card.Outlined>
 	);
 };

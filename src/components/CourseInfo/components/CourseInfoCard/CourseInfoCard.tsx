@@ -5,6 +5,7 @@ import {
 	CourseInfoCardTitle,
 } from './CourseInfoCardText';
 import styles from './styles.module.scss';
+import { Card } from 'src/common/Card';
 
 interface CourseInfoCardProps {
 	course: Course;
@@ -12,7 +13,7 @@ interface CourseInfoCardProps {
 
 export const CourseInfoCard = ({ course }: CourseInfoCardProps) => {
 	return (
-		<div className={styles.courseinfo_card}>
+		<Card.Outlined className={styles.courseinfo_card}>
 			<div className={styles.courseinfo_card__content}>
 				<h6 className={styles.courseinfo_content__title}>Description:</h6>
 				<p className={styles.courseinfo_content__description}>
@@ -43,6 +44,6 @@ export const CourseInfoCard = ({ course }: CourseInfoCardProps) => {
 					</CourseInfoCardDescription>
 				</div>
 			</div>
-		</div>
+		</Card.Outlined>
 	);
 };
