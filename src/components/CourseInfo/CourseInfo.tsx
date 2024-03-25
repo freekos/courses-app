@@ -28,7 +28,7 @@ export const CourseInfo = () => {
 					<CourseInfoCard course={course} />
 				</div>
 				<div className={styles.course_info__actions}>
-					<Button onClick={() => navigate(-1)}>Back</Button>
+					<Button onClick={() => navigate('../')}>Back</Button>
 				</div>
 			</div>
 		</Container>

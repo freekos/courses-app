@@ -76,7 +76,7 @@ export const CreateCourse = () => {
 						<Button
 							style={{ textTransform: 'uppercase' }}
 							type='button'
-							onClick={() => navigate(-1)}
+							onClick={() => navigate('../')}
 						>
 							Cancel
 						</Button>
