@@ -10,10 +10,8 @@ const loginSchema = z.object({
 		.string()
 		.min(1, { message: 'Email is required' })
 		.email({ message: 'Invalid email format' }),
-	password: z
-		.string()
-		.min(1, { message: 'Password is required' })
-		.min(8, { message: 'Min password length is 8' }),
+	password: z.string().min(1, { message: 'Password is required' }),
+	// .min(8, { message: 'Min password length is 8' }),
 });
 export type LoginSchema = z.infer<typeof loginSchema>;
 
@@ -37,6 +35,7 @@ export const useLoginForm = () => {
 			form.setError('root', {
 				message: err?.response?.data?.result ?? 'Request error',
 			});
+			throw err;
 		}
 	};
 
