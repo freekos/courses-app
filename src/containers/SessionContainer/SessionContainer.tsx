@@ -1,8 +1,8 @@
 import { Session } from 'src/api';
 import { useSession } from 'src/hooks/useSession';
-import { ContainerComponent } from 'src/types';
+import { ContainerProps } from 'src/types';
 
-type SessionContainerProps = ContainerComponent<{
+type SessionContainerProps = ContainerProps<{
 	session: Session | null;
 	onLogout: () => void;
 }>;
