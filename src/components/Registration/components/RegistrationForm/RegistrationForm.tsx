@@ -50,7 +50,12 @@ export const RegistrationForm = ({ form, onSubmit }: RegistrationFormProps) => {
 							const rootError = form.formState.errors.root?.message;
 							return (
 								<Field label='Password*' error={error || rootError}>
-									<Input placeholder='Input text' error={error} {...field} />
+									<Input
+										type='password'
+										placeholder='Input text'
+										error={error}
+										{...field}
+									/>
 								</Field>
 							);
 						}}
