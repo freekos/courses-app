@@ -11,10 +11,8 @@ const registrationSchema = z.object({
 		.string()
 		.min(1, { message: 'Email is required' })
 		.email({ message: 'Invalid email format' }),
-	password: z
-		.string()
-		.min(1, { message: 'Password is required' })
-		.min(8, { message: 'Min password length is 8' }),
+	password: z.string().min(1, { message: 'Password is required' }),
+	// .min(8, { message: 'Min password length is 8' }),
 });
 export type RegistrationSchema = z.infer<typeof registrationSchema>;
 
@@ -31,7 +29,7 @@ export const useRegistrationForm = () => {
 
 	const handleRegistration = async (data: RegistrationSchema) => {
 		try {
-			const res = await authApi.register(data);
+			await authApi.register(data);
 			form.reset();
 			navigate('/login');
 		} catch (err) {
@@ -39,6 +37,7 @@ export const useRegistrationForm = () => {
 			form.setError('root', {
 				message: err?.response?.data?.result ?? 'Request error',
 			});
+			throw err;
 		}
 	};
 
