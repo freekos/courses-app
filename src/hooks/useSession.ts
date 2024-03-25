@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Session } from 'src/api';
 
-const SESSION_KEY = 'session';
+export const SESSION_KEY = 'session';
 const FRAME_TIME = 60;
 
 // TODO: remove logic
