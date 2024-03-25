@@ -87,6 +87,8 @@ export const CreateCourse = () => {
 							display: 'flex',
 							justifyContent: 'space-between',
 							alignItems: 'flex-start',
+							flexWrap: 'wrap',
+							gap: '10px',
 						}}
 					>
 						<div

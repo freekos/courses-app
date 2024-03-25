@@ -73,7 +73,7 @@ export const CreateCourseForm = ({
 											}}
 										>
 											<Input
-												style={{ width: '400px' }}
+												style={{ width: '100%', maxWidth: '400px' }}
 												placeholder='Input text'
 												error={error}
 												value={value}

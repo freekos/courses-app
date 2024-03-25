@@ -21,7 +21,7 @@ export const AuthorForm = ({ form, onSubmit }: AuthorFormProps) => {
 						const error = form.formState.errors.name?.message;
 						return (
 							<Input
-								style={{ width: '400px' }}
+								style={{ width: '100%', maxWidth: '400px' }}
 								placeholder='Input text'
 								error={error}
 								{...field}
