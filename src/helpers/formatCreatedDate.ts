@@ -1,4 +1,3 @@
 export const formatCreatedDate = (dateStr: string) => {
-	const date = new Date(dateStr);
-	return date.toString();
+	return dateStr.split('/').join('.');
 };
