@@ -1,10 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 
+import { Button } from 'src/common';
 import { SessionContainer } from 'src/containers/SessionContainer';
-import { Button } from 'src/common/Button';
-import { HeaderWrapper } from './components/HeaderWrapper';
-import { Username } from './components/Username';
-import { Logo } from './components/Logo';
+import { HeaderWrapper, Logo, Username } from './components';
 import styles from './styles.module.scss';
 
 export const Header = () => {

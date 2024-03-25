@@ -4,10 +4,8 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
 
 import { useCourses } from 'src/hooks';
 import { Course, DeleteCourseArgs } from 'src/api';
-import { Container } from 'src/common/Container';
-import { Button } from 'src/common/Button';
-import { SearchBar } from './components/SearchBar';
-import { CourseCard } from './components/CourseCard';
+import { Button, Container } from 'src/common';
+import { CourseCard, SearchBar } from './components';
 import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
 

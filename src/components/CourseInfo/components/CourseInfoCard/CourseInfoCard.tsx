@@ -1,11 +1,11 @@
-import { formatFullName, getDurationTime } from 'src/helpers';
 import { Course } from 'src/api';
-import { Card } from 'src/common/Card';
 import {
 	CourseInfoCardDescription,
 	CourseInfoCardTitle,
 } from './CourseInfoCardText';
 import styles from './styles.module.scss';
+import { formatFullName, getDurationTime } from 'src/helpers';
+import { Card } from 'src/common';
 
 interface CourseInfoCardProps {
 	course: Course;

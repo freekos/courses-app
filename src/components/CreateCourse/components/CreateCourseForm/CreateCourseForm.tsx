@@ -1,14 +1,11 @@
 import { PropsWithChildren, ReactNode } from 'react';
 import { Controller, UseFormReturn } from 'react-hook-form';
 
-import { CreateCourseSchema } from 'src/hooks/useCreateCourseForm';
+import { CreateCourseSchema } from 'src/hooks';
 import { getDurationTime } from 'src/helpers';
-import { Field } from 'src/common/Field';
-import { Input } from 'src/common/Input';
-import { Button } from 'src/common/Button';
-import { Card } from 'src/common/Card';
-import { CourseFormTitle } from './CourseFormTitle';
+import { Button, Card, Field, Input } from 'src/common';
 import { CourseFormSection } from './CourseFormSection';
+import { CourseFormTitle } from './CourseFormTitle';
 import styles from './styles.module.scss';
 
 interface CreateCourseFormProps extends PropsWithChildren {

@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import { useRegistrationForm } from 'src/hooks/useRegistrationForm';
-import { Container } from 'src/common/Container';
-import { RegistrationForm } from './components/RegistrationForm';
-import { AuthCard, AuthLayout } from 'src/common/Auth';
+import { useRegistrationForm } from 'src/hooks';
+import { AuthCard, AuthLayout, Container } from 'src/common';
+import { RegistrationForm } from './components';
 
 export const Registration = () => {
 	const { form, handleRegistration } = useRegistrationForm();

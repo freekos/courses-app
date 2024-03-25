@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import { useLoginForm } from 'src/hooks/useLoginForm';
-import { Container } from 'src/common/Container';
-
-import { LoginForm } from './components/LoginForm';
-import { AuthCard, AuthLayout } from 'src/common/Auth';
+import { useLoginForm } from 'src/hooks';
+import { AuthCard, AuthLayout, Container } from 'src/common';
+import { LoginForm } from './components';
 
 export const Login = () => {
 	const { form, handleLogin } = useLoginForm();

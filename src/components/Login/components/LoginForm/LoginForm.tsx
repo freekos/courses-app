@@ -1,10 +1,7 @@
 import { Controller, UseFormReturn } from 'react-hook-form';
 
-import { LoginSchema } from 'src/hooks/useLoginForm';
-import { AuthForm } from 'src/common/Auth';
-import { Button } from 'src/common/Button';
-import { Field } from 'src/common/Field';
-import { Input } from 'src/common/Input';
+import { LoginSchema } from 'src/hooks';
+import { AuthForm, Button, Field, Input } from 'src/common';
 
 interface LoginFormProps {
 	form: UseFormReturn<LoginSchema>;

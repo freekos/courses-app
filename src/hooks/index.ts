@@ -5,3 +5,4 @@ export * from './useRegistrationForm';
 export * from './useSession';
 export * from './useAuthors';
 export * from './useCourses';
+export * from './useCourse';

@@ -6,7 +6,7 @@ import {
 	formatFullName,
 	getDurationTime,
 } from 'src/helpers';
-import { Card } from 'src/common/Card';
+import { Card } from 'src/common';
 import { CourseInfoText } from './CourseInfoText';
 import styles from './styles.module.scss';
 

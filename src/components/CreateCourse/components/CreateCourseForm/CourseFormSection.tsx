@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react';
+
 import styles from './styles.module.scss';
 
 type CourseFormSectionProps = ComponentProps<'section'>;

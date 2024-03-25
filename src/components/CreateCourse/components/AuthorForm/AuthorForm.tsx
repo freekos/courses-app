@@ -1,9 +1,7 @@
 import { Controller, UseFormReturn } from 'react-hook-form';
 
 import { AuthorSchema } from 'src/hooks';
-import { Button } from 'src/common/Button';
-import { Field } from 'src/common/Field';
-import { Input } from 'src/common/Input';
+import { Button, Field, Input } from 'src/common';
 import styles from './styles.module.scss';
 
 interface AuthorFormProps {

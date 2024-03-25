@@ -4,28 +4,25 @@ import { Controller } from 'react-hook-form';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/16/solid';
 
 import {
+	AuthorSchema,
 	CreateCourseSchema,
+	useAuthorForm,
+	useAuthors,
 	useCreateCourseForm,
-} from 'src/hooks/useCreateCourseForm';
-import { AuthorSchema, useAuthorForm } from 'src/hooks/useAuthorForm';
-import { useAuthors } from 'src/hooks/useAuthors';
-import { Container } from 'src/common/Container';
-import { Typography } from 'src/common/Typography';
-import { Button } from 'src/common/Button';
+} from 'src/hooks';
+import { Author } from 'src/api';
+import { Button, Container, Typography } from 'src/common';
 import {
+	AuthorForm,
+	AuthorItem,
+	AuthorList,
+	AuthorListTitle,
 	CourseFormSection,
 	CourseFormTitle,
 	CreateCourseForm,
-} from './components/CreateCourseForm';
-import { AuthorForm } from './components/AuthorForm';
-import {
-	AuthorList,
-	AuthorListTitle,
 	EmptyAuthorList,
-} from './components/AuthorList';
-import { AuthorItem } from './components/AuthorItem';
+} from './components';
 import styles from './styles.module.scss';
-import { Author } from 'src/api';
 
 export const CreateCourse = () => {
 	const { form: courseForm, handleCreateCourse: onCreateCourse } =

@@ -1,10 +1,10 @@
-import { Container } from 'src/common/Container';
-import { CourseInfoCard } from './components/CourseInfoCard';
-import styles from './styles.module.scss';
-import { Button } from 'src/common/Button';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useCourse } from 'src/hooks/useCourse';
 import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { useCourse } from 'src/hooks';
+import { Button, Container } from 'src/common';
+import { CourseInfoCard } from './components';
+import styles from './styles.module.scss';
 
 export const CourseInfo = () => {
 	const { id } = useParams();

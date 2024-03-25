@@ -1,10 +1,7 @@
 import { Controller, UseFormReturn } from 'react-hook-form';
 
-import { RegistrationSchema } from 'src/hooks/useRegistrationForm';
-import { Button } from 'src/common/Button';
-import { Field } from 'src/common/Field';
-import { Input } from 'src/common/Input';
-import { AuthForm } from 'src/common/Auth';
+import { RegistrationSchema } from 'src/hooks';
+import { AuthForm, Button, Field, Input } from 'src/common';
 
 interface RegistrationFormProps {
 	form: UseFormReturn<RegistrationSchema>;
