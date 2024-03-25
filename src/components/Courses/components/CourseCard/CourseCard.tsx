@@ -1,13 +1,14 @@
 import { ReactNode } from 'react';
-import { Course } from 'src/types/course';
+
+import { Course } from 'src/api';
 import {
 	formatCreatedDate,
 	formatFullName,
 	getDurationTime,
 } from 'src/helpers';
+import { Card } from 'src/common/Card';
 import { CourseInfoText } from './CourseInfoText';
 import styles from './styles.module.scss';
-import { Card } from 'src/common/Card';
 
 interface CourseCardProps {
 	course: Course;
@@ -34,7 +35,7 @@ export const CourseCard = ({ course, actions }: CourseCardProps) => {
 						/>
 						<CourseInfoText
 							title='Created:'
-							description={formatCreatedDate(course.createdAt)}
+							description={formatCreatedDate(course.creationDate)}
 						/>
 					</div>
 					{actions}

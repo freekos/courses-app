@@ -1,27 +1,22 @@
-import { useState } from 'react';
-import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
 
+import { useCourses } from 'src/hooks';
+import { Course, DeleteCourseArgs } from 'src/api';
 import { Container } from 'src/common/Container';
 import { Button } from 'src/common/Button';
-import { Course } from 'src/types/course';
 import { SearchBar } from './components/SearchBar';
 import { CourseCard } from './components/CourseCard';
-import { AUTHORS_LIST, COURSES } from 'src/constants';
 import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
 
 export const Courses = () => {
-	const courses = COURSES.map((course) => {
-		const authors = course.authors.map((author) => {
-			const findAuthor = AUTHORS_LIST.find((item) => item.id === author);
-			return findAuthor!.name;
-		});
-		return {
-			...course,
-			authors,
-		};
-	});
+	const {
+		courses,
+		handleGetCourses,
+		handleDeleteCourse: onDeleteCourse,
+	} = useCourses();
 	const [resultCourses, setResultCourses] = useState<Course[]>(courses);
 	const navigate = useNavigate();
 
@@ -31,6 +26,19 @@ export const Courses = () => {
 		);
 		setResultCourses(filterCourses);
 	};
+
+	const handleDeleteCourse = async (data: DeleteCourseArgs) => {
+		try {
+			await onDeleteCourse(data);
+			await handleGetCourses();
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	useEffect(() => {
+		handleGetCourses();
+	}, []);
 
 	if (!courses.length) {
 		return (
@@ -84,7 +92,10 @@ export const Courses = () => {
 								Show course
 							</Button>
 
-							<Button size='icon'>
+							<Button
+								size='icon'
+								onClick={() => handleDeleteCourse({ id: item.id })}
+							>
 								<TrashIcon width='20' color='white' />
 							</Button>
 
