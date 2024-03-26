@@ -1,0 +1,18 @@
+.author_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    &__name {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #333E48;
+    }
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+}

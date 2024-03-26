@@ -1,26 +1,28 @@
+import { Link, useLocation } from 'react-router-dom';
+
+import { Button } from 'src/common';
 import { SessionContainer } from 'src/containers/SessionContainer';
-import { Button } from 'src/common/Button';
-import { HeaderWrapper } from './components/HeaderWrapper';
-import { Username } from './components/Username';
-import { Logo } from './components/Logo';
+import { HeaderWrapper, Logo, Username } from './components';
 import styles from './styles.module.scss';
 
 export const Header = () => {
+	const location = useLocation();
+
 	return (
 		<header className={styles.header}>
 			<HeaderWrapper
 				left={
-					<a href='#'>
+					<Link to='/courses'>
 						<Logo />
-					</a>
+					</Link>
 				}
 				right={
 					<div className={styles.header__right}>
 						<SessionContainer
-							render={({ isAuth, onLogin, onLogout }) =>
-								isAuth ? (
+							render={({ session, onLogout }) =>
+								session ? (
 									<>
-										<Username name='Harry Poter' />
+										<Username name={session.user.name} />
 										<Button
 											style={{ textTransform: 'uppercase' }}
 											onClick={onLogout}
@@ -28,16 +30,14 @@ export const Header = () => {
 											Logout
 										</Button>
 									</>
-								) : (
-									<>
-										<Button
-											style={{ textTransform: 'uppercase' }}
-											onClick={onLogin}
-										>
+								) : location.pathname !== '/login' &&
+								  location.pathname !== '/registration' ? (
+									<Link to='/login'>
+										<Button style={{ textTransform: 'uppercase' }}>
 											Login
 										</Button>
-									</>
-								)
+									</Link>
+								) : null
 							}
 						/>
 					</div>

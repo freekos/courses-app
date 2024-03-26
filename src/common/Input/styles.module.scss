@@ -2,12 +2,19 @@
     padding: 15px 10px;
     border-width: 1px;
     border-style: solid;
-    border-color: rgb(128, 128, 128);
+    border-color: rgb(207, 207, 207);
     border-radius: 5px;
     background: rgba(255, 255, 255, 1);
     color: rgba(0, 0, 0, 1);
 
     &::placeholder {
-        color: rgb(128, 128, 128);
+        color: rgb(207, 207, 207);
     }
+    &[data-error="true"] {
+        border-color: #FF0000;
+        color: #FF0000;
+    }
+}
+textarea.input {
+    min-height: 152px;
 }

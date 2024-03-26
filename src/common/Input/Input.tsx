@@ -1,11 +1,20 @@
-import { InputHTMLAttributes, forwardRef } from 'react';
+import { InputHTMLAttributes, createElement, forwardRef } from 'react';
+
 import styles from './styles.module.scss';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement>;
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+	as?: 'input' | 'textarea';
+	error?: string;
+};
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-	(props: InputProps, ref) => {
-		return <input className={styles.input} ref={ref} {...props} />;
+	({ as = 'input', error, ...props }: InputProps, ref) => {
+		return createElement(as, {
+			className: styles.input,
+			ref,
+			['data-error']: !!error,
+			...props,
+		});
 	}
 );
 

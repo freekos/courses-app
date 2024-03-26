@@ -1,0 +1,25 @@
+.author_list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: max-content;
+
+    &__title {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #333E48;
+    }
+}
+.author_empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__description {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #333E48;
+    }
+}

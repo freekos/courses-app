@@ -1,10 +1,11 @@
-import { Course } from 'src/types/course';
-import { getDurationTime } from 'src/helpers';
+import { Course } from 'src/api';
 import {
 	CourseInfoCardDescription,
 	CourseInfoCardTitle,
 } from './CourseInfoCardText';
 import styles from './styles.module.scss';
+import { formatFullName, getDurationTime } from 'src/helpers';
+import { Card } from 'src/common';
 
 interface CourseInfoCardProps {
 	course: Course;
@@ -12,7 +13,7 @@ interface CourseInfoCardProps {
 
 export const CourseInfoCard = ({ course }: CourseInfoCardProps) => {
 	return (
-		<div className={styles.courseinfo_card}>
+		<Card.Outlined className={styles.courseinfo_card}>
 			<div className={styles.courseinfo_card__content}>
 				<h6 className={styles.courseinfo_content__title}>Description:</h6>
 				<p className={styles.courseinfo_content__description}>
@@ -36,13 +37,13 @@ export const CourseInfoCard = ({ course }: CourseInfoCardProps) => {
 						<span>hours</span>
 					</CourseInfoCardDescription>
 					<CourseInfoCardDescription>
-						{course.createdAt}
+						{course.creationDate}
 					</CourseInfoCardDescription>
 					<CourseInfoCardDescription>
-						{course.authors}
+						{course.authors.map(formatFullName).join(', ')}
 					</CourseInfoCardDescription>
 				</div>
 			</div>
-		</div>
+		</Card.Outlined>
 	);
 };

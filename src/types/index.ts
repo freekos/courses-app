@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
 
-export interface ContainerComponent<Args> {
+export interface ContainerProps<Args> {
 	render: (args: Args) => ReactNode;
 }

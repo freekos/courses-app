@@ -1,0 +1,17 @@
+.field {
+    display: flex;
+    flex-direction: column;
+
+    &__label {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #333E48;
+    }
+    &__error {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #FF0000;
+    }
+}

@@ -1,16 +1,25 @@
-import { ReactNode } from 'react';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { Course } from 'src/types/course';
-import { Container } from 'src/common/Container';
-import { CourseInfoCard } from './components/CourseInfoCard';
+import { useCourse } from 'src/hooks';
+import { Button, Container } from 'src/common';
+import { CourseInfoCard } from './components';
 import styles from './styles.module.scss';
 
-interface CourseInfoProps {
-	course: Course;
-	actions?: ReactNode;
-}
+export const CourseInfo = () => {
+	const { id } = useParams();
+	const navigate = useNavigate();
+	const { course, handleGetCourse } = useCourse();
 
-export const CourseInfo = ({ course, actions }: CourseInfoProps) => {
+	useEffect(() => {
+		if (!id) return;
+		handleGetCourse({ id });
+	}, [id]);
+
+	if (!course) {
+		return null;
+	}
+
 	return (
 		<Container isDark>
 			<div className={styles.course_info}>
@@ -18,7 +27,9 @@ export const CourseInfo = ({ course, actions }: CourseInfoProps) => {
 				<div className={styles.course_info__card}>
 					<CourseInfoCard course={course} />
 				</div>
-				<div className={styles.course_info__actions}>{actions}</div>
+				<div className={styles.course_info__actions}>
+					<Button onClick={() => navigate('../')}>Back</Button>
+				</div>
 			</div>
 		</Container>
 	);

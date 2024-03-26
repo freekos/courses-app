@@ -1,21 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
 
-import { Container } from 'src/common/Container';
-import { Button } from 'src/common/Button';
-import { Course } from 'src/types/course';
-import { SearchBar } from './components/SearchBar';
-import { CourseCard } from './components/CourseCard';
+import { useCourses } from 'src/hooks';
+import { Course, DeleteCourseArgs } from 'src/api';
+import { Button, Container } from 'src/common';
+import { CourseCard, SearchBar } from './components';
 import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
 
-interface CoursesProps {
-	courses: Course[];
-	onShow: (course: Course) => void;
-}
-
-export const Courses = ({ courses, onShow }: CoursesProps) => {
+export const Courses = () => {
+	const {
+		courses,
+		handleGetCourses,
+		handleDeleteCourse: onDeleteCourse,
+	} = useCourses();
 	const [resultCourses, setResultCourses] = useState<Course[]>(courses);
+	const navigate = useNavigate();
 
 	const handleSearch = (search: string) => {
 		const filterCourses = courses.filter((item) =>
@@ -23,6 +24,19 @@ export const Courses = ({ courses, onShow }: CoursesProps) => {
 		);
 		setResultCourses(filterCourses);
 	};
+
+	const handleDeleteCourse = async (data: DeleteCourseArgs) => {
+		try {
+			await onDeleteCourse(data);
+			await handleGetCourses();
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	useEffect(() => {
+		handleGetCourses();
+	}, []);
 
 	if (!courses.length) {
 		return (
@@ -37,7 +51,10 @@ export const Courses = ({ courses, onShow }: CoursesProps) => {
 			>
 				<EmptyCoursesList
 					action={
-						<Button style={{ textTransform: 'uppercase' }}>
+						<Button
+							style={{ textTransform: 'uppercase' }}
+							onClick={() => navigate('/courses/add')}
+						>
 							Add new course
 						</Button>
 					}
@@ -52,9 +69,12 @@ export const Courses = ({ courses, onShow }: CoursesProps) => {
 			style={{ height: '100%' }}
 			left={<SearchBar onSearch={handleSearch} />}
 			right={
-				<a href='#'>
-					<Button style={{ textTransform: 'uppercase' }}>Add new</Button>
-				</a>
+				<Button
+					style={{ textTransform: 'uppercase' }}
+					onClick={() => navigate('/courses/add')}
+				>
+					Add new
+				</Button>
 			}
 		>
 			{resultCourses.map((item) => (
@@ -64,13 +84,16 @@ export const Courses = ({ courses, onShow }: CoursesProps) => {
 					actions={
 						<div className={styles.course__actions}>
 							<Button
-								onClick={() => onShow(item)}
 								style={{ width: '100%', textTransform: 'uppercase' }}
+								onClick={() => navigate(`/courses/${item.id}`)}
 							>
 								Show course
 							</Button>
 
-							<Button size='icon'>
+							<Button
+								size='icon'
+								onClick={() => handleDeleteCourse({ id: item.id })}
+							>
 								<TrashIcon width='20' color='white' />
 							</Button>
 
