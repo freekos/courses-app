@@ -1,12 +1,25 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+import { useAppDispatch } from 'src/hooks';
+import { ReduxContainer } from 'src/containers';
 import { Button } from 'src/common';
-import { SessionContainer } from 'src/containers/SessionContainer';
 import { HeaderWrapper, Logo, Username } from './components';
 import styles from './styles.module.scss';
+// import { userLogoutThunk } from 'src/store';
 
 export const Header = () => {
+	const navigate = useNavigate();
 	const location = useLocation();
+	const dispatch = useAppDispatch();
+
+	const handleLogout = async () => {
+		try {
+			// TODO: remove comment
+			// await dispatch(userLogoutThunk());
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	return (
 		<header className={styles.header}>
@@ -18,25 +31,27 @@ export const Header = () => {
 				}
 				right={
 					<div className={styles.header__right}>
-						<SessionContainer
-							render={({ session, onLogout }) =>
-								session ? (
+						<ReduxContainer
+							selector={(state) => state.user}
+							render={({ data }) =>
+								data.isAuth ? (
 									<>
-										<Username name={session.user.name} />
+										{!!data.name && <Username name={data.name} />}
 										<Button
 											style={{ textTransform: 'uppercase' }}
-											onClick={onLogout}
+											onClick={handleLogout}
 										>
 											Logout
 										</Button>
 									</>
 								) : location.pathname !== '/login' &&
 								  location.pathname !== '/registration' ? (
-									<Link to='/login'>
-										<Button style={{ textTransform: 'uppercase' }}>
-											Login
-										</Button>
-									</Link>
+									<Button
+										style={{ textTransform: 'uppercase' }}
+										onClick={() => navigate('/login')}
+									>
+										Login
+									</Button>
 								) : null
 							}
 						/>
