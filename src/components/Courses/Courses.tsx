@@ -1,42 +1,48 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
 
-import { useCourses } from 'src/hooks';
-import { Course, DeleteCourseArgs } from 'src/api';
+// import { authorsGetThunk, courseDeleteThunk, coursesGetThunk } from 'src/store';
+import { useAppDispatch, useAppSelector } from 'src/hooks';
+import { getCoursesWithAuthorNames } from 'src/helpers';
+import { DeleteCourseArgs } from 'src/api';
 import { Button, Container } from 'src/common';
 import { CourseCard, SearchBar } from './components';
 import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
 
 export const Courses = () => {
-	const {
-		courses,
-		handleGetCourses,
-		handleDeleteCourse: onDeleteCourse,
-	} = useCourses();
-	const [resultCourses, setResultCourses] = useState<Course[]>(courses);
+	const { courses } = useAppSelector((state) => state.courses);
+	const { authors } = useAppSelector((state) => state.authors);
+	const [search, setSearch] = useState<string>('');
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
-	const handleSearch = (search: string) => {
-		const filterCourses = courses.filter((item) =>
+	const coursesWithAuthorsNames = useMemo(() => {
+		if (!courses.length || !authors.length) return [];
+		return getCoursesWithAuthorNames(courses, authors);
+	}, [courses, authors]);
+
+	const resultCourses = useMemo(() => {
+		return coursesWithAuthorsNames.filter((item) =>
 			item.title.toLowerCase().includes(search.toLowerCase())
 		);
-		setResultCourses(filterCourses);
-	};
+	}, [coursesWithAuthorsNames, search]);
 
 	const handleDeleteCourse = async (data: DeleteCourseArgs) => {
 		try {
-			await onDeleteCourse(data);
-			await handleGetCourses();
+			// TODO: remove comment
+			// await dispatch(courseDeleteThunk(data));
+			// await dispatch(coursesGetThunk());
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-	useEffect(() => {
-		handleGetCourses();
-	}, []);
+	// TODO: remove comment
+	// useEffect(() => {
+	// 	dispatch(coursesGetThunk());
+	// }, []);
 
 	if (!courses.length) {
 		return (
@@ -67,7 +73,7 @@ export const Courses = () => {
 		<Container
 			isDark
 			style={{ height: '100%' }}
-			left={<SearchBar onSearch={handleSearch} />}
+			left={<SearchBar onSearch={setSearch} />}
 			right={
 				<Button
 					style={{ textTransform: 'uppercase' }}

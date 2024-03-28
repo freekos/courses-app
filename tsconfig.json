@@ -8,6 +8,7 @@
       "dom"
     ],
     "baseUrl": ".",
+    "noUncheckedIndexedAccess": false,
   },
   "include":["."],
 }

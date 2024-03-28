@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-import { authApi } from 'src/api';
+// import { userRegisterThunk } from 'src/store';
+import { useAppDispatch } from './useAppDispatch';
 
 const registrationSchema = z.object({
 	name: z.string().min(1, { message: 'Name is required' }),
@@ -25,11 +26,13 @@ export const useRegistrationForm = () => {
 		},
 		resolver: zodResolver(registrationSchema),
 	});
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
 	const handleRegistration = async (data: RegistrationSchema) => {
 		try {
-			await authApi.register(data);
+			// TODO: remove comment
+			// await dispatch(userRegisterThunk(data));
 			form.reset();
 			navigate('/login');
 		} catch (err) {

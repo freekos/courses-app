@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { authApi } from 'src/api';
-import { useSession } from './useSession';
+// import { userLoginThunk } from 'src/store';
+import { useAppDispatch } from './useAppDispatch';
 
 const loginSchema = z.object({
 	email: z
@@ -16,7 +16,8 @@ const loginSchema = z.object({
 export type LoginSchema = z.infer<typeof loginSchema>;
 
 export const useLoginForm = () => {
-	const { setSession } = useSession();
+	const dispatch = useAppDispatch();
+
 	const form = useForm<LoginSchema>({
 		defaultValues: {
 			email: '',
@@ -27,9 +28,9 @@ export const useLoginForm = () => {
 
 	const handleLogin = async (data: LoginSchema) => {
 		try {
-			const res = await authApi.login(data);
+			// TODO: remove comment
+			// await dispatch(userLoginThunk(data));
 			form.reset();
-			setSession(res);
 		} catch (err) {
 			console.log(err);
 			form.setError('root', {
