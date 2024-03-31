@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 import { envVars } from 'src/configs';
-import { store, userLogoutThunk } from 'src/store';
+import { store } from 'src/store';
 
 export const instance = axios.create({
 	baseURL: envVars.API_URL,
@@ -27,7 +27,8 @@ instance.interceptors.response.use(
 	(response) => response.data,
 	(error) => {
 		if (error instanceof AxiosError && error.response?.status === 401) {
-			store.dispatch(userLogoutThunk());
+			// TODO: remove comment
+			// store.dispatch(userLogoutThunk());
 		}
 		return Promise.reject(error);
 	}
