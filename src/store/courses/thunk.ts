@@ -1,6 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { AddCourseArgs, DeleteCourseArgs, coursesApi } from 'src/api';
+import {
+	AddCourseArgs,
+	DeleteCourseArgs,
+	UpdateCourseArgs,
+	coursesApi,
+} from 'src/api';
 
 export const coursesGetThunk = createAsyncThunk(
 	'courses/getCourses',
@@ -13,6 +18,13 @@ export const courseAddThunk = createAsyncThunk(
 	'courses/addCourse',
 	async (args: AddCourseArgs) => {
 		return coursesApi.addCourse(args);
+	}
+);
+
+export const courseUpdateThunk = createAsyncThunk(
+	'coruses/updateCourse',
+	async (args: UpdateCourseArgs) => {
+		return coursesApi.updateCourse(args);
 	}
 );
 
