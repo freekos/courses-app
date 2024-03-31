@@ -2,7 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { coursesApi } from 'src/api';
+import { useAppDispatch } from './useAppDispatch';
+import { courseAddThunk } from 'src/store';
 
 const createCourseSchema = z.object({
 	title: z.string().min(1, { message: 'Title is required' }),
@@ -29,14 +30,17 @@ export const useCreateCourseForm = () => {
 		},
 		resolver: zodResolver(createCourseSchema),
 	});
+	const dispatch = useAppDispatch();
 
 	const handleCreateCourse = async (data: CreateCourseSchema) => {
 		try {
-			await coursesApi.addCourse({
-				...data,
-				authors: data.authors.map((item) => item.id),
-				duration: +data.duration,
-			});
+			await dispatch(
+				courseAddThunk({
+					...data,
+					authors: data.authors.map((item) => item.id),
+					duration: +data.duration,
+				})
+			);
 		} catch (err) {
 			console.log(err);
 			form.setError('root', {

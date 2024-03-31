@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Controller } from 'react-hook-form';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/16/solid';
 
+import { authorDeleteThunk, authorsGetThunk } from 'src/store';
 import {
 	AuthorSchema,
 	CreateCourseSchema,
@@ -23,10 +24,9 @@ import {
 	EmptyAuthorList,
 } from './components';
 import styles from './styles.module.scss';
-// import { authorDeleteThunk, authorsGetThunk } from 'src/store';
+import { ReduxContainer } from 'src/containers';
 
 export const CreateCourse = () => {
-	const { authors } = useAppSelector((state) => state.authors);
 	const { form: courseForm, handleCreateCourse: onCreateCourse } =
 		useCreateCourseForm();
 	const { form: authorForm, handleCreateAuthor: onCreateAuthor } =
@@ -37,8 +37,7 @@ export const CreateCourse = () => {
 	const handleCreateAuthor = async (data: AuthorSchema) => {
 		try {
 			await onCreateAuthor(data);
-			// TODO: remove comment
-			// await dispatch(authorsGetThunk());
+			await dispatch(authorsGetThunk());
 		} catch (err) {
 			console.log(err);
 		}
@@ -46,9 +45,8 @@ export const CreateCourse = () => {
 
 	const handleDeleteAuthor = async ({ id }: { id: string }) => {
 		try {
-			// TODO: remove comment
-			// await dispatch(authorDeleteThunk({ id }));
-			// await dispatch(authorsGetThunk());
+			await dispatch(authorDeleteThunk({ id }));
+			await dispatch(authorsGetThunk());
 		} catch (err) {
 			console.log(err);
 		}
@@ -109,28 +107,35 @@ export const CreateCourse = () => {
 							</CourseFormSection>
 							<CourseFormSection>
 								<AuthorListTitle>Authors List</AuthorListTitle>
-								<AuthorList>
-									{authors.map((item, index) => (
-										<AuthorItem
-											key={index}
-											name={item.name}
-											actions={
-												<>
-													<PlusIcon
-														style={{ cursor: 'pointer' }}
-														width={16}
-														onClick={() => handleAddAuthor(item)}
-													/>
-													<TrashIcon
-														style={{ cursor: 'pointer' }}
-														width={16}
-														onClick={() => handleDeleteAuthor({ id: item.id })}
-													/>
-												</>
-											}
-										/>
-									))}
-								</AuthorList>
+								<ReduxContainer
+									selector={(state) => state.authors.authors}
+									render={({ data }) => (
+										<AuthorList>
+											{data.map((item, index) => (
+												<AuthorItem
+													key={index}
+													name={item.name}
+													actions={
+														<>
+															<PlusIcon
+																style={{ cursor: 'pointer' }}
+																width={16}
+																onClick={() => handleAddAuthor(item)}
+															/>
+															<TrashIcon
+																style={{ cursor: 'pointer' }}
+																width={16}
+																onClick={() =>
+																	handleDeleteAuthor({ id: item.id })
+																}
+															/>
+														</>
+													}
+												/>
+											))}
+										</AuthorList>
+									)}
+								/>
 							</CourseFormSection>
 						</div>
 						<CourseFormSection>
