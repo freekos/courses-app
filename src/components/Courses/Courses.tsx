@@ -2,18 +2,18 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
 
-// import { authorsGetThunk, courseDeleteThunk, coursesGetThunk } from 'src/store';
+import { courseDeleteThunk, coursesGetThunk } from 'src/store';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { getCoursesWithAuthorNames } from 'src/helpers';
 import { DeleteCourseArgs } from 'src/api';
-import { Button, Container } from 'src/common';
+import { Button, Container, ProtectedView } from 'src/common';
 import { CourseCard, SearchBar } from './components';
 import { EmptyCoursesList } from './EmptyCoursesList';
 import styles from './styles.module.scss';
 
 export const Courses = () => {
-	const { courses } = useAppSelector((state) => state.courses);
-	const { authors } = useAppSelector((state) => state.authors);
+	const courses = useAppSelector((state) => state.courses.courses);
+	const authors = useAppSelector((state) => state.authors.authors);
 	const [search, setSearch] = useState<string>('');
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
@@ -31,19 +31,18 @@ export const Courses = () => {
 
 	const handleDeleteCourse = async (data: DeleteCourseArgs) => {
 		try {
-			// TODO: remove comment
-			// await dispatch(courseDeleteThunk(data));
-			// await dispatch(coursesGetThunk());
+			await dispatch(courseDeleteThunk(data));
+			await dispatch(coursesGetThunk());
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-	// TODO: remove comment
-	// useEffect(() => {
-	// 	dispatch(coursesGetThunk());
-	// }, []);
+	useEffect(() => {
+		dispatch(coursesGetThunk());
+	}, []);
 
+	// TODO: move by single-responsibility
 	if (!courses.length) {
 		return (
 			<Container
@@ -57,12 +56,21 @@ export const Courses = () => {
 			>
 				<EmptyCoursesList
 					action={
-						<Button
-							style={{ textTransform: 'uppercase' }}
-							onClick={() => navigate('/courses/add')}
+						<ProtectedView
+							role='admin'
+							fallback={
+								<p style={{ textAlign: 'center' }}>
+									You have not access to create course button!
+								</p>
+							}
 						>
-							Add new course
-						</Button>
+							<Button
+								style={{ textTransform: 'uppercase' }}
+								onClick={() => navigate('/courses/add')}
+							>
+								Add new course
+							</Button>
+						</ProtectedView>
 					}
 				/>
 			</Container>
@@ -75,12 +83,21 @@ export const Courses = () => {
 			style={{ height: '100%' }}
 			left={<SearchBar onSearch={setSearch} />}
 			right={
-				<Button
-					style={{ textTransform: 'uppercase' }}
-					onClick={() => navigate('/courses/add')}
+				<ProtectedView
+					role='admin'
+					// fallback={
+					// 	<p style={{ textAlign: 'center' }}>
+					// 		You have not access to create new course!
+					// 	</p>
+					// }
 				>
-					Add new
-				</Button>
+					<Button
+						style={{ textTransform: 'uppercase' }}
+						onClick={() => navigate('/courses/add')}
+					>
+						Add new
+					</Button>
+				</ProtectedView>
 			}
 		>
 			{resultCourses.map((item) => (
@@ -88,6 +105,7 @@ export const Courses = () => {
 					key={item.id}
 					course={item}
 					actions={
+						// TODO: move by single-responsibility
 						<div className={styles.course__actions}>
 							<Button
 								style={{ width: '100%', textTransform: 'uppercase' }}
@@ -95,17 +113,18 @@ export const Courses = () => {
 							>
 								Show course
 							</Button>
+							<ProtectedView role='admin'>
+								<Button
+									size='icon'
+									onClick={() => handleDeleteCourse({ id: item.id })}
+								>
+									<TrashIcon width='20' color='white' />
+								</Button>
 
-							<Button
-								size='icon'
-								onClick={() => handleDeleteCourse({ id: item.id })}
-							>
-								<TrashIcon width='20' color='white' />
-							</Button>
-
-							<Button size='icon'>
-								<PencilIcon width='20' color='white' />
-							</Button>
+								<Button size='icon'>
+									<PencilIcon width='20' color='white' />
+								</Button>
+							</ProtectedView>
 						</div>
 					}
 				/>
