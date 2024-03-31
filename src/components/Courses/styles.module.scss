@@ -1,6 +1,7 @@
 .course {
     &__actions {
-        display: flex;
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr;
         gap: 10px;
     }
 }
@@ -27,5 +28,13 @@
     &__title {
         font-size: 1.3rem;
         font-weight: 700;
+    }
+}
+
+@media (max-width: 768px) {
+    .course {
+        &__actions {
+            grid-template-columns: repeat(3, auto);
+        }
     }
 }
