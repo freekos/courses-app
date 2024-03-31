@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Controller } from 'react-hook-form';
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/16/solid';
@@ -6,8 +5,9 @@ import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/16/solid';
 import {
 	AuthorSchema,
 	CreateCourseSchema,
+	useAppDispatch,
+	useAppSelector,
 	useAuthorForm,
-	useAuthors,
 	useCreateCourseForm,
 } from 'src/hooks';
 import { Author } from 'src/api';
@@ -23,19 +23,32 @@ import {
 	EmptyAuthorList,
 } from './components';
 import styles from './styles.module.scss';
+// import { authorDeleteThunk, authorsGetThunk } from 'src/store';
 
 export const CreateCourse = () => {
+	const { authors } = useAppSelector((state) => state.authors);
 	const { form: courseForm, handleCreateCourse: onCreateCourse } =
 		useCreateCourseForm();
 	const { form: authorForm, handleCreateAuthor: onCreateAuthor } =
 		useAuthorForm();
-	const { authors, handleGetAuthors, handleDeleteAuthor } = useAuthors();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
 	const handleCreateAuthor = async (data: AuthorSchema) => {
 		try {
 			await onCreateAuthor(data);
-			await handleGetAuthors();
+			// TODO: remove comment
+			// await dispatch(authorsGetThunk());
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const handleDeleteAuthor = async ({ id }: { id: string }) => {
+		try {
+			// TODO: remove comment
+			// await dispatch(authorDeleteThunk({ id }));
+			// await dispatch(authorsGetThunk());
 		} catch (err) {
 			console.log(err);
 		}
@@ -60,10 +73,6 @@ export const CreateCourse = () => {
 			courseForm.getValues('authors').filter((author) => author.id !== item.id)
 		);
 	};
-
-	useEffect(() => {
-		handleGetAuthors();
-	}, []);
 
 	return (
 		<Container isDark>
