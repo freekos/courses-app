@@ -23,6 +23,7 @@ export const Routing = () => {
 				<Route Component={AdminProtect}>
 					<Route path='/courses'>
 						<Route path='add' Component={CreateCourse} />
+						<Route path='update/:id' Component={CreateCourse} />
 					</Route>
 				</Route>
 			</Route>

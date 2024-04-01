@@ -1,175 +1,92 @@
-import { useNavigate } from 'react-router-dom';
-import { Controller } from 'react-hook-form';
-import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/16/solid';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { authorDeleteThunk, authorsGetThunk } from 'src/store';
 import {
-	AuthorSchema,
-	CreateCourseSchema,
-	useAppDispatch,
+	CourseSchema,
 	useAppSelector,
-	useAuthorForm,
-	useCreateCourseForm,
+	useCourse,
+	useCourseForm,
 } from 'src/hooks';
-import { Author } from 'src/api';
-import { Button, Container, Typography } from 'src/common';
-import {
-	AuthorForm,
-	AuthorItem,
-	AuthorList,
-	AuthorListTitle,
-	CourseFormSection,
-	CourseFormTitle,
-	CreateCourseForm,
-	EmptyAuthorList,
-} from './components';
+import { Container, Typography } from 'src/common';
+import { CreateCourseContainer } from './containers';
 import styles from './styles.module.scss';
-import { ReduxContainer } from 'src/containers';
+import { useEffect } from 'react';
+
+type CourseMode = 'create' | 'update' | null;
 
 export const CreateCourse = () => {
-	const { form: courseForm, handleCreateCourse: onCreateCourse } =
-		useCreateCourseForm();
-	const { form: authorForm, handleCreateAuthor: onCreateAuthor } =
-		useAuthorForm();
-	const dispatch = useAppDispatch();
+	const authors = useAppSelector((state) => state.authors.authors);
+	const { course, handleGetCourse } = useCourse();
+	const {
+		form: courseForm,
+		handleCreateCourse: onCreateCourse,
+		handleUpdateCourse: onUpdateCourse,
+	} = useCourseForm();
+	const location = useLocation();
 	const navigate = useNavigate();
+	const { id } = useParams();
+	const mode: CourseMode = location.pathname.includes('add')
+		? 'create'
+		: location.pathname.includes('update')
+			? 'update'
+			: null;
 
-	const handleCreateAuthor = async (data: AuthorSchema) => {
-		try {
-			await onCreateAuthor(data);
-			await dispatch(authorsGetThunk());
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const handleDeleteAuthor = async ({ id }: { id: string }) => {
-		try {
-			await dispatch(authorDeleteThunk({ id }));
-			await dispatch(authorsGetThunk());
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const handleCreateCourse = async (data: CreateCourseSchema) => {
+	const handleCreateCourse = async (data: CourseSchema) => {
+		if (mode !== 'create') return;
 		try {
 			await onCreateCourse(data);
+			navigate('/courses');
+		} catch (err) {
+			console.log(err);
+			courseForm.setError('root', {
+				message: err?.response?.data?.result || 'Request error',
+			});
+		}
+	};
+
+	const handleUpdateCourse = async (data: CourseSchema) => {
+		if (mode !== 'update' || !course) return;
+		try {
+			await onUpdateCourse({ id: course.id, ...data });
 			navigate('/courses');
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-	const handleAddAuthor = (item: Author) => {
-		courseForm.setValue('authors', [item, ...courseForm.getValues('authors')]);
-	};
+	useEffect(() => {
+		if (mode !== 'update' || !id) return;
+		handleGetCourse({ id });
+	}, [id]);
 
-	const handleRemoveAuthor = (item: Author) => {
+	useEffect(() => {
+		if (!course) return;
+		courseForm.setValue('title', course.title);
+		courseForm.setValue('description', course.description);
+		courseForm.setValue('duration', String(course.duration));
 		courseForm.setValue(
 			'authors',
-			courseForm.getValues('authors').filter((author) => author.id !== item.id)
+			course.authors.map((authorId) => {
+				const findAuthor = authors.find((item) => item.id === authorId);
+				return findAuthor ?? { id: '', name: '' };
+			})
 		);
-	};
+	}, [authors, course]);
 
 	return (
 		<Container isDark>
 			<Typography.H3>Course Edit/Create Page</Typography.H3>
 			<div className={styles.create_course__form}>
-				<CreateCourseForm
-					form={courseForm}
-					onSubmit={handleCreateCourse}
-					actions={
-						<Button
-							style={{ textTransform: 'uppercase' }}
-							type='button'
-							onClick={() => navigate('../')}
-						>
-							Cancel
-						</Button>
-					}
-				>
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							alignItems: 'flex-start',
-							flexWrap: 'wrap',
-							gap: '10px',
-						}}
-					>
-						<div
-							style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
-						>
-							<CourseFormSection>
-								<CourseFormTitle>Authors</CourseFormTitle>
-								<AuthorForm form={authorForm} onSubmit={handleCreateAuthor} />
-							</CourseFormSection>
-							<CourseFormSection>
-								<AuthorListTitle>Authors List</AuthorListTitle>
-								<ReduxContainer
-									selector={(state) => state.authors.authors}
-									render={({ data }) => (
-										<AuthorList>
-											{data.map((item, index) => (
-												<AuthorItem
-													key={index}
-													name={item.name}
-													actions={
-														<>
-															<PlusIcon
-																style={{ cursor: 'pointer' }}
-																width={16}
-																onClick={() => handleAddAuthor(item)}
-															/>
-															<TrashIcon
-																style={{ cursor: 'pointer' }}
-																width={16}
-																onClick={() =>
-																	handleDeleteAuthor({ id: item.id })
-																}
-															/>
-														</>
-													}
-												/>
-											))}
-										</AuthorList>
-									)}
-								/>
-							</CourseFormSection>
-						</div>
-						<CourseFormSection>
-							<CourseFormTitle>Course Authors</CourseFormTitle>
-							<Controller
-								control={courseForm.control}
-								name='authors'
-								render={({ field: { value } }) => (
-									<>
-										{!value.length ? (
-											<EmptyAuthorList>Author list is empty</EmptyAuthorList>
-										) : (
-											<AuthorList>
-												{value.map((item, index) => (
-													<AuthorItem
-														key={index}
-														name={item.name}
-														actions={
-															<MinusIcon
-																style={{ cursor: 'pointer' }}
-																width={16}
-																onClick={() => handleRemoveAuthor(item)}
-															/>
-														}
-													/>
-												))}
-											</AuthorList>
-										)}
-									</>
-								)}
-							/>
-						</CourseFormSection>
-					</div>
-				</CreateCourseForm>
+				{mode === 'create' ? (
+					<CreateCourseContainer
+						courseForm={courseForm}
+						onSubmit={handleCreateCourse}
+					/>
+				) : mode === 'update' ? (
+					<CreateCourseContainer
+						courseForm={courseForm}
+						onSubmit={handleUpdateCourse}
+					/>
+				) : null}
 			</div>
 		</Container>
 	);
