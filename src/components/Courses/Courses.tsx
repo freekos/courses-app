@@ -121,7 +121,10 @@ export const Courses = () => {
 									<TrashIcon width='20' color='white' />
 								</Button>
 
-								<Button size='icon'>
+								<Button
+									size='icon'
+									onClick={() => navigate(`/courses/update/${item.id}`)}
+								>
 									<PencilIcon width='20' color='white' />
 								</Button>
 							</ProtectedView>
