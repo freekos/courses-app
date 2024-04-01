@@ -32,12 +32,20 @@ export const Courses = () => {
 							// 	</p>
 							// }
 						>
-							<Button
-								style={{ textTransform: 'uppercase' }}
-								onClick={() => navigate('/courses/add')}
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'flex-end',
+									width: '100%',
+								}}
 							>
-								Add new
-							</Button>
+								<Button
+									style={{ textTransform: 'uppercase' }}
+									onClick={() => navigate('/courses/add')}
+								>
+									Add new
+								</Button>
+							</div>
 						</ProtectedView>
 					) : null
 				}

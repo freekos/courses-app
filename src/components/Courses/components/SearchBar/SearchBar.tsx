@@ -18,6 +18,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
 	return (
 		<div className={styles.search_bar}>
 			<Input
+				style={{ width: '100%', maxWidth: '400px' }}
 				placeholder='Input text'
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}
