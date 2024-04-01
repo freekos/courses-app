@@ -20,13 +20,8 @@ export const useAuthorForm = () => {
 	const dispatch = useAppDispatch();
 
 	const handleCreateAuthor = async (data: AuthorSchema) => {
-		try {
-			await dispatch(authorAddThunk(data));
-			form.reset();
-		} catch (err) {
-			console.log(err);
-			throw err;
-		}
+		await dispatch(authorAddThunk(data));
+		form.reset();
 	};
 
 	return { form, handleCreateAuthor };

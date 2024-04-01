@@ -1,5 +1,5 @@
 export * from './useAuthorForm';
-export * from './useCreateCourseForm';
+export * from './useCourseForm';
 export * from './useLoginForm';
 export * from './useRegistrationForm';
 export * from './useAuthors';
