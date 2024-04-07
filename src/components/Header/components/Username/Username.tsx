@@ -5,5 +5,9 @@ interface UsernameProps {
 }
 
 export const Username = ({ name }: UsernameProps) => {
-	return <p className={styles.username}>{name}</p>;
+	return (
+		<p className={styles.username} data-testid='username'>
+			{name}
+		</p>
+	);
 };
