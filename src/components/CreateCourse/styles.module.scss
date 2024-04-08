@@ -2,4 +2,18 @@
     &__form {
         margin-top: 45px;
     }
+    &__sections {
+        display: grid;
+        justify-content: space-between;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .create_course {
+        &__sections {
+            grid-template-columns: 1fr;
+        }
+    }
 }

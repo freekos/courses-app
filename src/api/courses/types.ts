@@ -5,6 +5,10 @@ export interface AddCourseArgs {
 	authors: string[];
 }
 
+export interface UpdateCourseArgs extends AddCourseArgs {
+	id: string;
+}
+
 export interface DeleteCourseArgs {
 	id: string;
 }
@@ -14,10 +18,10 @@ export interface GetCourseArgs {
 }
 
 export interface Course {
+	id: string;
 	title: string;
 	description: string;
 	creationDate: string;
 	duration: number;
 	authors: string[];
-	id: string;
 }

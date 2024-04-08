@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactNode } from 'react';
-import { Controller, UseFormReturn } from 'react-hook-form';
+import { Controller, SubmitHandler, UseFormReturn } from 'react-hook-form';
 
-import { CreateCourseSchema } from 'src/hooks';
+import { CourseSchema } from 'src/hooks';
 import { getDurationTime } from 'src/helpers';
 import { Button, Card, Field, Input } from 'src/common';
 import { CourseFormSection } from './CourseFormSection';
@@ -9,8 +9,8 @@ import { CourseFormTitle } from './CourseFormTitle';
 import styles from './styles.module.scss';
 
 interface CreateCourseFormProps extends PropsWithChildren {
-	form: UseFormReturn<CreateCourseSchema>;
-	onSubmit: (data: CreateCourseSchema) => void;
+	form: UseFormReturn<CourseSchema>;
+	onSubmit: SubmitHandler<CourseSchema>;
 	actions?: ReactNode;
 }
 

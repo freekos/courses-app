@@ -2,7 +2,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { authorsApi } from 'src/api';
+import { authorAddThunk } from 'src/store';
+import { useAppDispatch } from './useAppDispatch';
 
 const authorSchema = z.object({
 	name: z.string().min(1, { message: 'Author name is required' }),
@@ -16,15 +17,11 @@ export const useAuthorForm = () => {
 		},
 		resolver: zodResolver(authorSchema),
 	});
+	const dispatch = useAppDispatch();
 
 	const handleCreateAuthor = async (data: AuthorSchema) => {
-		try {
-			await authorsApi.addAuthor(data);
-			form.reset();
-		} catch (err) {
-			console.log(err);
-			throw err;
-		}
+		await dispatch(authorAddThunk(data));
+		form.reset();
 	};
 
 	return { form, handleCreateAuthor };

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Author, DeleteAuthorArgs, authorsApi } from 'src/api';
+
+import { Author, authorsApi } from 'src/api';
 
 export const useAuthors = () => {
 	const [authors, setAuthors] = useState<Author[]>([]);
@@ -13,15 +14,5 @@ export const useAuthors = () => {
 		}
 	};
 
-	const handleDeleteAuthor = async (data: DeleteAuthorArgs) => {
-		try {
-			await authorsApi.deleteAuthor(data);
-			await handleGetAuthors();
-		} catch (err) {
-			console.log(err);
-			throw err;
-		}
-	};
-
-	return { authors, handleGetAuthors, handleDeleteAuthor };
+	return { authors, handleGetAuthors };
 };

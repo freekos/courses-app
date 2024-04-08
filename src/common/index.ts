@@ -5,3 +5,4 @@ export * from './Container';
 export * from './Field';
 export * from './Input';
 export * from './Typography';
+export * from './ProtectedView';

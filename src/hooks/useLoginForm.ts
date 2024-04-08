@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-// import { userLoginThunk } from 'src/store';
+import { userLoginThunk } from 'src/store';
 import { useAppDispatch } from './useAppDispatch';
 
 const loginSchema = z.object({
@@ -28,8 +28,7 @@ export const useLoginForm = () => {
 
 	const handleLogin = async (data: LoginSchema) => {
 		try {
-			// TODO: remove comment
-			// await dispatch(userLoginThunk(data));
+			await dispatch(userLoginThunk(data));
 			form.reset();
 		} catch (err) {
 			console.log(err);

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-// import { userRegisterThunk } from 'src/store';
+import { userRegisterThunk } from 'src/store';
 import { useAppDispatch } from './useAppDispatch';
 
 const registrationSchema = z.object({
@@ -31,8 +31,7 @@ export const useRegistrationForm = () => {
 
 	const handleRegistration = async (data: RegistrationSchema) => {
 		try {
-			// TODO: remove comment
-			// await dispatch(userRegisterThunk(data));
+			await dispatch(userRegisterThunk(data));
 			form.reset();
 			navigate('/login');
 		} catch (err) {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Course, DeleteCourseArgs, authorsApi, coursesApi } from 'src/api';
+import { Course, authorsApi, coursesApi } from 'src/api';
 
 export const useCourses = () => {
 	const [courses, setCourses] = useState<Course[]>([]);
@@ -26,14 +26,5 @@ export const useCourses = () => {
 		}
 	};
 
-	const handleDeleteCourse = async (args: DeleteCourseArgs) => {
-		try {
-			await coursesApi.deleteCourse(args);
-		} catch (err) {
-			console.log(err);
-			throw err;
-		}
-	};
-
-	return { courses, handleGetCourses, handleDeleteCourse };
+	return { courses, handleGetCourses };
 };
