@@ -16,32 +16,31 @@ describe('CourseCard', () => {
 		return <CourseCard course={mockCourse} />;
 	};
 
-	it('should display title', () => {
+	beforeEach(() => {
 		render(getComponent());
+	});
+
+	it('should display title', () => {
 		expect(screen.getByText('Test Course')).toBeInTheDocument();
 	});
 
 	it('should display description', () => {
-		render(getComponent());
 		expect(
 			screen.getByText('This is a test course description.')
 		).toBeInTheDocument();
 	});
 
 	it('should display duration in the correct format', () => {
-		render(getComponent());
 		expect(screen.getByText('Duration:')).toBeInTheDocument();
 		expect(screen.getByText('02:00')).toBeInTheDocument();
 	});
 
 	it('should display authors list', () => {
-		render(getComponent());
 		expect(screen.getByText('Authors:')).toBeInTheDocument();
 		expect(screen.getByText('John Doe, Jane Smith')).toBeInTheDocument();
 	});
 
 	it('should display created date in the correct format', () => {
-		render(getComponent());
 		expect(screen.getByText('Created:')).toBeInTheDocument();
 		expect(screen.getByText('2024-04-01')).toBeInTheDocument();
 	});
