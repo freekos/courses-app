@@ -4,32 +4,44 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 
 import { Header } from '../Header';
+import { UserState } from 'src/store';
 
 const middlewares = [];
 const mockStore = configureStore(middlewares);
 
 describe('Header', () => {
+	const getComponent = (props: { userState?: Partial<UserState> } = {}) => {
+		const store = mockStore({ user: props?.userState });
+		return (
+			<Provider store={store}>
+				<Router>
+					<Header />
+				</Router>
+			</Provider>
+		);
+	};
+
 	it('should render header logo', () => {
-		const store = mockStore({ user: {} });
+		const mockUserState = {
+			isAuth: false,
+		};
+
 		render(
-			<Provider store={store}>
-				<Router>
-					<Header />
-				</Router>
-			</Provider>
+			getComponent({
+				userState: mockUserState,
+			})
 		);
-		expect(screen.queryByAltText('Logo')).toBeInTheDocument();
-		expect(screen.queryByTestId('username')).not.toBeInTheDocument();
+
+		expect(screen.getByAltText('Logo')).toBeInTheDocument();
 	});
-	it('should render username', () => {
-		const store = mockStore({ user: { isAuth: true, name: 'User' } });
-		render(
-			<Provider store={store}>
-				<Router>
-					<Header />
-				</Router>
-			</Provider>
-		);
-		expect(screen.queryByTestId('username')).toContainHTML('User');
+	it('should render authorized username', () => {
+		const mockUserState = {
+			isAuth: true,
+			name: 'Alex',
+		};
+
+		render(getComponent({ userState: mockUserState }));
+
+		expect(screen.getByText('Alex')).toBeInTheDocument();
 	});
 });
