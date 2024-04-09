@@ -9,66 +9,54 @@ import { thunk } from 'redux-thunk';
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-const mockCourses = [
-	{
-		id: '1',
-		title: 'Course 1',
-		description: 'Description 1',
-		creationDate: '2024-04-08',
-		duration: 60,
-		authors: ['1'],
-	},
-];
-const mockAuthors = [{ id: '1', name: 'Alex' }];
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useNavigate: () => mockNavigate,
+}));
 
 describe('Courses component', () => {
-	let navigate;
-
-	beforeEach(() => {
-		navigate = jest.fn();
-		jest.doMock('react-router-dom', () => ({
-			...jest.requireActual('react-router-dom'),
-			useNavigate: () => navigate,
-		}));
-	});
-
-	it('should display amount of CourseCard equal to the length of courses array', () => {
+	const getComponent = () => {
+		const mockCourses = [
+			{
+				id: '1',
+				title: 'Course 1',
+				description: 'Description 1',
+				creationDate: '2024-04-08',
+				duration: 60,
+				authors: ['1'],
+			},
+		];
+		const mockAuthors = [{ id: '1', name: 'Alex' }];
 		const store = mockStore({
+			user: { role: 'admin' },
 			courses: { courses: mockCourses },
 			authors: { authors: mockAuthors },
-			user: { role: 'admin' },
 		});
 
-		render(
+		return (
 			<Provider store={store}>
 				<Router>
 					<Courses />
 				</Router>
 			</Provider>
 		);
+	};
+
+	it('should display amount of CourseCard equal to the length of courses array', () => {
+		render(getComponent());
 		const courseCards = screen.getAllByTestId('course-card');
 
-		expect(courseCards.length).toBe(mockCourses.length);
+		expect(courseCards.length).toBe(1);
 	});
 
 	it('should show CourseForm after clicking the "Add new course" button', () => {
-		const store = mockStore({
-			courses: { courses: mockCourses },
-			authors: { authors: mockAuthors },
-			user: { role: 'admin' },
-		});
+		render(getComponent());
 
-		render(
-			<Provider store={store}>
-				<Router>
-					<Courses />
-				</Router>
-			</Provider>
-		);
-
-		const addButton = screen.getByText('Add new');
+		const addButton = screen.getByRole('button', { name: 'Add new' });
 		fireEvent.click(addButton);
 
-		// expect(navigate).toHaveBeenCalled();
+		expect(mockNavigate).toHaveBeenCalledWith('/courses/add');
 	});
 });
