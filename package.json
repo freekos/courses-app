@@ -34,7 +34,7 @@
     "eslint:fix": "eslint --fix --ext .ts --ext .tsx src",
     "test:nowatch": "react-script test --watchAll=false",
     "prepare": "husky",
-    "prepublish": "npm run eslint:fix"
+    "prepublish": "npm run eslint:fix & react-scripts test --watchAll=false"
   },
   "jest": {
     "moduleNameMapper": {
