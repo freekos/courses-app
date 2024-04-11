@@ -34,11 +34,9 @@ const coursesSlice = createSlice({
 		});
 		builder.addCase(courseAddThunk.fulfilled, (state) => {
 			state.isAdding = false;
-			alert('Course created');
 		});
 		builder.addCase(courseAddThunk.rejected, (state) => {
 			state.isAdding = false;
-			alert('Course create failed');
 		});
 		builder.addCase(courseDeleteThunk.pending, (state) => {
 			state.isDeleting = true;
